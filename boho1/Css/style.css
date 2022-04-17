@@ -1,0 +1,179 @@
+/* Google fonts  */
+@import url("https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Viaoda Libre", cursive;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+.wrapper {
+  background-image: url("../images/background.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Navbar  */
+img,
+svg {
+  vertical-align: middle;
+  width: 100px;
+}
+
+.logo {
+  height: 49.12px;
+  width: 120px;
+  left: 29px;
+  top: 12px;
+  border-radius: 0px;
+}
+.navbar-light .navbar-brand {
+  color: white;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: linear-gradient(90.08deg, #000000 0%, #00042f 100%);
+  color: white;
+}
+
+.nav-link {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 63px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.right-nav span i {
+  height: 0px;
+  width: 31.82px;
+  left: 1591px;
+  top: 16px;
+  border-radius: nullpx;
+  cursor: pointer;
+  color: white;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  margin-left: 140px;
+  color: white;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: gray;
+}
+
+.navbar-toggler-icon {
+  background-color: white;
+}
+.navbar-expand-lg .navbar-collapse {
+  justify-content: space-around;
+}
+
+/* Brand section css  */
+.card {
+  border-radius: 7rem;
+}
+.brand-name-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0px;
+}
+.brand-name-card img {
+  width: 100%;
+  border-radius: 100%;
+  border: 2px solid #060c45;
+}
+
+/* Footer  */
+.footer-background {
+  background-color: #060c45;
+  color: white;
+  padding: 32px;
+}
+
+.center {
+  text-align: center;
+}
+
+.center p a {
+  text-decoration: none;
+  color: white;
+}
+
+.social-media i {
+  padding: 10px;
+}
+
+/* carousel */
+#testimonials {
+  width: 110%;
+  position: relative;
+  right: 4rem;
+  top: 2rem;
+}
+
+#carouselmain {
+  width: 40%;
+  height: 10%;
+}
+.carousel01 {
+  position: relative;
+  left: 10rem;
+  top: 1rem;
+}
+.carousel02 {
+  position: relative;
+  left: 10rem;
+  top: 1.5rem;
+}
+.carousel03 {
+  position: relative;
+  left: 46.5rem;
+  bottom: 19rem;
+}
+.carousel04 {
+  position: relative;
+  left: 46.5rem;
+  bottom: 18.5rem;
+}
+.same {
+  height: 10rem;
+  width: 35%;
+}
+.mb-5 {
+  width: 110%;
+  position: relative;
+  right: 4.5rem;
+  bottom: 18.8rem;
+}
+.strip01 {
+  width: 100%;
+  position: relative;
+  top: 2rem;
+}
+
+/* fotter */
+.last {
+  position: absolute;
+  top: 57.5rem;
+}
+/* Media querry  */
+
+@media screen and (max-width: 985px) {
+  .navbar-light .navbar-nav .nav-link {
+    margin: auto;
+    color: white;
+  }
+}

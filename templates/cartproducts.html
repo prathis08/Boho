@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boho</title>
+</head>
+<body>
+    
+        {% for i in allords %}
+        {% for j in i%}
+        {% if j.availability %}
+        <form action="/testrazorpay" method="post">{% csrf_token %}
+        <input type="hidden" name="productname" value="{{j.name}}">
+        <input type="hidden" name="cost" id="cost" value="{{j.cost}}">
+        <input type="hidden" name="productid" id="productid" value="{{j.product_id}}">
+        <input type="hidden" name="dropaddress" value="chembur">
+        <input type="number" name="qty" id="qty">
+        <input type="number" name="totalcost" id="totalcost" value="{{j.cost}}">
+        <img src="/media/{{j.image}}">
+        <input type="hidden" name="noofcart" value="{{j.no_of_cart}}">
+        <input type="hidden" name="image" value="{{j.image}}">
+        <button type="submit" id="buynow">Buy now</button>
+        <script>a=document.getElementById('checkavailability').style.visibility='hidden'</script>
+        </form>
+    
+        {% elif j.checkingavailability %}
+        <h1>Product name is:{{j.name}}</h1>
+        <h2>Cost is:{{j.cost}}</h2>
+        <input type="text" name="productname" value="{{j.name}}">
+        <input type="number" name="cost" id="cost" value="{{j.cost}}">
+        <input type="hidden" name="productid" id="productid" value="{{j.product_id}}">
+        <input type="hidden" name="dropaddress" value="chembur">
+        <input type="number" name="qty" id="qty">
+        <input type="number" name="totalcost" id="totalcost" value="{{j.cost}}">
+        <img src="/media/{{j.image}}">
+        <input type="hidden" name="noofcart" value="{{j.no_of_cart}}">
+        <h2>Checking for availability</h2>
+        <script>a=document.getElementById('checkavailability').style.visibility='hidden'</script>
+
+       {% else %}
+       <h1>Product name is:{{j.name}}</h1>
+       <h2>Cost is:{{j.cost}}</h2>
+       <input type="text" name="productname" value="{{j.name}}">
+       <input type="number" name="cost" id="cost" value="{{j.cost}}">
+       <input type="hidden" name="productid" id="productid" value="{{j.product_id}}">
+       <input type="hidden" name="dropaddress" value="chembur">
+       <input type="number" name="qty" id="qty">
+       <input type="number" name="totalcost" id="totalcost" value="{{j.cost}}">
+       <img src="/media/{{j.image}}">
+       <input type="hidden" name="noofcart" value="{{j.no_of_cart}}">
+        <form action="/checking" method="post">{% csrf_token %}
+            <input type="hidden" name="noofcart" value="{{j.no_of_cart}}">
+            <input type="number" name="qty" id="qty">
+            <button type="submit" id="checkavailability" name="checkavailability">Check availability</button>
+        </form>
+        {% endif %}
+
+        <form action="/removefromcart" method="post">{% csrf_token %}
+            <input type="hidden" name="noofcart" value="{{j.no_of_cart}}">
+            <button type="submit" id="removefromcart" name="removefromcart">Remove</button>
+        </form>
+        {% endfor %}
+        {% endfor %}
+        
+        
+    
+
+</body>
+</html>

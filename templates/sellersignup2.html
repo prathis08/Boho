@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SignUp</title>
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css'%}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous" />
+
+</head>
+
+<body>
+{% if account_created %}
+<script>alert("Your account was created successfully")</script>
+{% endif %}
+{% if flag %}
+<script>alert("This no is already registered please try another number")</script>
+{% endif %}
+
+  <div class="container">
+    <div class="formWraper">
+      <div class="formDiv">
+        <form action="/sellersignup/otpverify" method="post">{% csrf_token %}
+        <h2>Create Account</h2>
+
+
+        <div class="formGroup">
+          <i class="far fa-address-card"></i>
+          <input type="text" name="name" id="name" placeholder="Name" required>
+        </div>
+        <div class="formGroup">
+            <i class="fas fa-phone"></i>
+         
+            <input type="text"  name="phoneno" id="phone" placeholder="Phone Number" pattern="[789][0-9]{9}" required autofocus>
+        
+        </div>
+        <div class="formGroup">
+        <i class="fas fa-scroll"></i>
+          <input type="text" name="product_pickup_address" id="product_pickup_address" placeholder="product_pickup_address">
+        </div>
+        
+
+        <button class="btn" type="submit">SIGN UP</button>
+        <!-- <div class="Account-exit">Already Registered??</div> -->
+        <div><a href="/sellersignin" id="login">Login</a></div>
+        <div><a href="/signup">Signup as Customer</a></div>
+      
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

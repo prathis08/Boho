@@ -1,0 +1,76 @@
+html,
+body {
+ margin: 0px;
+ padding: 0px;
+ font-family: sans-serif;
+ box-sizing: border-box;
+ background-image: url("images/mountain.jpg");
+ background-repeat: no-repeat;
+ background-attachment: fixed;
+ background-size: cover;
+}
+
+.container {
+ display: flex;
+ align-content: center;
+ justify-content: center;
+ max-width: 100%;
+}
+
+.formWraper{
+ display: flex;
+ width: 40%;
+ height: 600px;
+ background-color: #3E497A;
+ margin-top: 80px;
+ border-radius: 10px;
+ box-shadow: 0px 0px 20px #000000;
+}
+
+.formDiv {
+ width: 100%;
+ padding: 8%;
+ background-color: #3E497A;
+ text-align: center;
+ border-radius: 10px 0px 0px 10px;
+}
+
+.text {
+ color: #000000;
+ background-color: #3E497A;
+}
+
+.phone{
+ font-size: 2rem;
+ width: 80%;
+ padding: 20px;
+ margin-bottom: 10px;
+ font-size: smaller;
+}
+
+.btn {
+ width: 40%;
+ padding: 18px;
+ background-color: #1A1A40;
+ margin-top: 15px;
+ color: #000000;
+ border-radius: 20px;
+ border-style: none;
+}
+
+.btn:hover {
+ background-color: #7882A4;
+}
+
+@media screen and (max-width:1000px){
+ .formWraper, .phone{
+   width: 80%;
+ }
+}
+
+@media screen and (max-width:600px){
+ .formDiv{
+   width: 90%;
+   border-radius: 10px 10px 10px 10px;
+ }
+}

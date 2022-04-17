@@ -1,0 +1,38 @@
+{% load static %}
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/contactus.css'%}">
+</head>
+<body>
+    <h1 id="test">hello</h1>
+    {% for id in ids %}
+    {% for idss in id %}
+    <h2>{{idss.order_id}}</h2>
+    <h2>{{idss.product_id}}</h2>
+    <h2>{{idss.cust_name}}</h2>
+    {% endfor %}
+    {% endfor %}
+<h1>This is carts data</h1>
+    {% for cartitems2 in cartitems %}
+    {% for cartitems3 in cartitems2 %}
+    <h2>{{custponeno}}</h2>
+    <h2>{{cartitems3.product_id}}</h2>
+    <h2>{{cartitems3.pickup_location}}</h2>
+    {% endfor %}
+    {% endfor %}
+    <h1>This is catlog data</h1>
+    {% for catlogitems2 in catlogitems %}
+    {% for catlogitems3 in catlogitems2 %}
+    <h2>{{custphoneno}}</h2>
+    <h2>{{catlogitems3.product_id}}</h2>
+    <h2>{{catlogitems3.pickup_location}}</h2>
+    {% endfor %}
+    {% endfor %}
+   
+</body>
+</html>

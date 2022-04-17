@@ -1,0 +1,62 @@
+*{
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.container {
+  max-width: 1300px;
+  height: 800px;
+  margin: 10px auto;
+  background-color: #fff;
+}
+
+.form {
+  display: contents;
+}
+
+.head {
+  padding: 20px;
+  margin-left: 70%;
+}
+
+.name {
+  padding: 20px;
+  margin-left: 40%;
+}
+
+.input-box {
+font-size: 20px;
+padding: 15px;
+margin-left: 40%;
+box-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.head2 {
+padding: 20px;
+margin-left: 40%;
+}
+
+.product {
+  flex: 0.25;
+  padding: 30px;
+  height: 50px;
+  border: none;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+  font-size: 40px;
+}
+
+@media screen and (max-width:700px) {}
+  .head, .head2, .product{
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width:1300px){
+  .container {
+    max-width: 95%;
+  }
+}

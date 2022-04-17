@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% load static %}
+    <form action="/afterfullpayment" method="POST">{% csrf_token %}
+        <input type="hidden" name="orderid" value="{{orderid}}">
+        <script src="https://checkout.razorpay.com/v1/checkout.js"
+        data-key="{{razorpay_api_key}}"
+        data-amount="{{amount}}"
+        data-currency="INR"
+        data-order_id="{{payment.id}}"
+        data-buttontext="Pay with Razorpay"
+        data-name="Boho"
+        data-description="Checking razorpay"
+        data-image="{% static 'images/flooring.jpg'%}"
+        data-prefill.name="Mahesh kori"
+        data-prefill.email="korimahesh079@gmail.com"
+        data-theme.color="blue"></script>
+
+        <!-- <button type="submit">pay</button> -->
+    </form>
+</body>
+</html>

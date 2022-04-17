@@ -1,0 +1,416 @@
+html,
+body {
+  margin: 0px;
+  padding: 0px;
+  font-family: sans-serif;
+  box-sizing: border-box;
+  background-color: #3e497a;
+}
+
+.container {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.formWraper {
+  display: flex;
+  width: 30%;
+  height: 600px;
+  background-color: #3e497a;
+  margin-top: 80px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px #000000;
+}
+
+.formDiv {
+  width: 100%;
+  padding: 8%;
+  background-color: #3e497a;
+  text-align: center;
+  border-radius: 10px 0px 0px 10px;
+}
+
+.formDiv h2 {
+  color: #000000;
+}
+
+.formGroup {
+  width: 100%;
+  position: relative;
+}
+
+.formGroup input {
+  width: 80%;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: smaller;
+}
+
+.formGroup i {
+  position: absolute;
+  left: 60px;
+  top: 12px;
+  font-size: smaller;
+}
+
+input::placeholder {
+  position: relative;
+  left: 50px;
+}
+
+.phone {
+  format: 1234567890;
+}
+
+.btn {
+  width: 40%;
+  padding: 15px;
+  background-color: #1a1a40;
+  margin-top: 15px;
+  color: #000000;
+  border-radius: 20px;
+  border-style: none;
+}
+
+.btn:hover {
+  background-color: #7882a4;
+}
+
+.Account-exit {
+  margin-top: 15px;
+}
+
+@media screen and (max-width: 1000px) {
+  .formWraper {
+    width: 85%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .formDiv {
+    width: 90%;
+    border-radius: 10px 10px 10px 10px;
+  }
+}
+
+/* Google fonts  */
+@import url("https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Viaoda Libre", cursive;
+}
+
+.clearfix::after {
+  content: "";
+  display: block;
+  clear: both;
+}
+
+/* Navbar  */
+img,
+svg {
+  vertical-align: middle;
+  width: 100px;
+}
+
+.logo {
+  height: 49.12px;
+  width: 120px;
+  left: 29px;
+  top: 12px;
+  border-radius: 0px;
+}
+.navbar-light .navbar-brand {
+  color: white;
+}
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: linear-gradient(90.08deg, #000000 0%, #00042f 100%);
+  color: white;
+}
+
+.nav-link {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 63px;
+  text-align: center;
+  color: #ffffff;
+}
+
+.right-nav span i {
+  height: 0px;
+  width: 31.82px;
+  left: 1591px;
+  top: 16px;
+  border-radius: nullpx;
+  cursor: pointer;
+  color: white;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  margin-left: 140px;
+  color: white;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: gray;
+}
+
+.navbar-toggler-icon {
+  background-color: white;
+}
+.navbar-expand-lg .navbar-collapse {
+  justify-content: space-around;
+}
+
+.img-in-slider {
+  height: 300px;
+  width: 100%;
+}
+
+.swiper-button-next {
+  color: white;
+}
+/* Brand section css  */
+.card {
+  border-radius: 7rem;
+}
+.brand-name-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px 0px;
+}
+.brand-name-card img {
+  width: 100%;
+  border-radius: 100%;
+  border: 2px solid #060c45;
+}
+
+/* Footer  */
+.footer-background {
+  background-color: #060c45;
+  color: white;
+  padding: 32px;
+}
+
+.center {
+  text-align: center;
+}
+
+.center p a {
+  text-decoration: none;
+  color: white;
+}
+
+.social-media i {
+  padding: 10px;
+}
+
+/* carousel */
+#testimonials {
+  width: 110%;
+  position: relative;
+  right: 4rem;
+  top: 2rem;
+}
+
+#carouselmain {
+  width: 40%;
+  height: 10%;
+}
+.carousel01 {
+  position: relative;
+  left: 10rem;
+  top: 1rem;
+}
+.carousel02 {
+  position: relative;
+  left: 10rem;
+  top: 1.5rem;
+}
+.carousel03 {
+  position: relative;
+  left: 46.5rem;
+  bottom: 19rem;
+}
+.carousel04 {
+  position: relative;
+  left: 46.5rem;
+  bottom: 18.5rem;
+}
+.same {
+  height: 10rem;
+  width: 35%;
+}
+.mb-5 {
+  width: 110%;
+  position: relative;
+  right: 4.5rem;
+  bottom: 18.8rem;
+}
+.strip01 {
+  width: 100%;
+  position: relative;
+  top: 2rem;
+}
+/* 
+.home-image{
+  height: 400px;
+  object-fit: cover;
+} */
+/* fotter */
+.last {
+  position: absolute;
+  top: 57.5rem;
+}
+
+.brands-main {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  /* margin-left: auto; */
+  text-align: center;
+}
+
+.brand-container {
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.brand-indi {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  border: 2px solid black;
+  display: inline-block;
+  margin: 10px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.brand-image-container {
+  display: flex;
+  flex-direction: column;
+}
+.brand-img {
+  height: 90px;
+  /* object-fit: cover; */
+  width: 90px;
+  padding: 2 px;
+}
+
+.brand-heading-name {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.famous-product-main {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin: 50px;
+  margin-bottom: 0;
+}
+.famous-products-indi-div {
+  margin: 20px 25px;
+}
+
+.famous-products-image {
+  text-align: center;
+  justify-content: center;
+  width: 650px;
+  height: 250px;
+}
+
+.famous-product-outer-main-div {
+  display: flex;
+  flex-wrap: wrap;
+}
+.swiper-size {
+  width: 650px;
+}
+
+.designstrip {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 20px;
+}
+
+.footer {
+  background-color: #060b33;
+  color: white;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  padding: 50px 60px;
+  /* margin: auto; */
+}
+
+.footer-first {
+  width: 40%;
+  text-align: left;
+}
+
+.footer-second {
+  width: 30%;
+  margin: 20px 40px;
+  padding-left: 50px;
+}
+
+.footer-page-link {
+  cursor: pointer;
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+}
+
+.footer-menu-heading {
+  margin-bottom: 20px;
+}
+
+.footer-third {
+  width: 30%;
+  text-align: left;
+}
+
+.footer-contact {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.footer-contact-image {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+  /* margin:10px; */
+}
+
+.footer-social-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.footer-social-link {
+  margin-right: 10px;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+/* Media querry  */
+
+@media screen and (max-width: 985px) {
+  .navbar-light .navbar-nav .nav-link {
+    margin: auto;
+    color: white;
+  }
+}

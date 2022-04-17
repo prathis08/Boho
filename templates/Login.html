@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Loginin</title>
+  {% load static %}
+  <link rel="stylesheet" href="{%static 'css/Login.css'%}">
+</head>
+
+
+<body>
+  {% if invalid %}
+<script>alert("Sorry but we could not find any account associated with this number")</script>
+{% endif %}
+{% if accountcreated %}
+<script>alert("Your account was created successfully")</script>
+{% endif %}
+  <div class="container">
+    <div class="formWraper">
+      <div class="formDiv">
+
+        <div class="welcomeDiv">
+          <h1>Welcome Back!</h1>
+          <p class="text">Get in touch with us for more updates.</p>
+          <label class="text1"><a href="/signup">SIGN UP</a></label>
+
+          <form action="/signin/otpverify" method="post">{% csrf_token %}
+            <input type="tel" class="phone" id="phone" name="phoneno" placeholder="Enter a phone number:" pattern="[789][0-9]{9}" title="Please enter valid phone number" required><br><br>
+            <!-- <small>Format: 1234567890</small><br><br> -->
+            <button class="btn" type="submit">Get otp</button>
+          </form>
+          <a href="/sellersignin">Login as seller</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

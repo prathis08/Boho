@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/productaddedtocart" method="post">{% csrf_token %}
+        {% for i in allords %}
+        {% for j in i%}
+        <h1>Product name is:{{j.name}}</h1>
+        <h2>Cost is:{{j.cost}}</h2>
+        <input type="text" name="productname" value="{{j.name}}">
+        <input type="text" name="cost" id="cost" value="{{j.cost}}">
+        <input type="text" name="productid" id="productid" value="{{j.product_id}}">
+        <input type="text" name="dropaddress" value="chembur">
+        <input type="number" name="qty" id="qty">
+        <input type="text" name="totalcost" id="totalcost">
+        <img src="/media/{{j.image}}">
+        <input type="hidden" name="image" value="{{j.image}}">
+        <input type="hidden" name="noofcart" value="{{j.no_of_cart}}">
+        <input type="hidden" name="description" value="{{j.description}}">
+        <input type="text" name="productname" value="{{j.name}}">
+        <input type="text" name="cost" id="cost" value="{{j.cost}}">
+        <input type="text" name="productid" id="productid" value="{{j.product_id}}">
+        {% endfor %}
+        {% endfor %}
+        
+        <button type="submit">Add to cart</button>
+    </form>
+
+</body>
+</html>
