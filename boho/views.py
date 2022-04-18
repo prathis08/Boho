@@ -1,5 +1,5 @@
 from audioop import add
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from sqlalchemy import false, true
 from twilio.rest import Client
@@ -24,12 +24,14 @@ from django.views.decorators.csrf import csrf_exempt
 # This will fetch all the products from the table and show to the user
 def index(request):
     allproducts = []
+    resp = {"Products": allproducts}
     catblogs = Products.objects.values('category', 'product_id')
     cats = {post['category'] for post in catblogs}
     for cat in cats:
-        cat1 = Products.objects.filter(category=cat)
+        cat1 = list(Products.objects.filter(category=cat).values())
         allproducts.append(cat1)
-        params = {'allproducts': allproducts}
+        # resp["Products"].append(cat1)
+        # params = {'allproducts': allproducts}
     if request.user.is_authenticated:
         username = request.user
         print(username)
@@ -38,17 +40,20 @@ def index(request):
         name=registered_nos.cust_phone_no
         if len(name)>0:
                 params = {'allproducts': allproducts}
-                return render(request, "index.html", params)
+                # return render(request, "index.html", params)
+                return JsonResponse(resp)
         else:
             Seller_details = SellerDetails.objects.filter(
                     phoneno=username)
             loggedin = 'true'
             addedproducts=Products.objects.filter(seller_phone_no=username)
             context = {'loggedin': loggedin,'sellerdetails':Seller_details,"addedproducts":addedproducts}
-            return render(request, "seller.html", context)
+            # return render(request, "seller.html", context)
+            return JsonResponse(resp)
     else:
-        params = {'allproducts': allproducts}
-        return render(request, "index.html", params)
+        # params = {'allproducts': allproducts}
+        # return render(request, "index.html", params)
+        return JsonResponse(resp)
 
 # This page will show the detailed view of the product 
 def productdetailedview(request,id):
