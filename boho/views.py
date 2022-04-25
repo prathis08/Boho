@@ -1,7 +1,8 @@
+from asyncore import compact_traceback
 from audioop import add
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
-from sqlalchemy import false, true
+from sqlalchemy import JSON, false, true
 from twilio.rest import Client
 import random as r
 from .models import Cart, Catlog, ContactUsCustomers, ContactUsSellers, CustomerDetails, SalesDone, SellerDetails, Installers, Transporters, Orders, Products, check_availability
@@ -18,6 +19,7 @@ from datetime import date
 from website.settings import RAZORPAY_API_KEY,RAZORPAY_API_SECRET_KEY,BASE_DIR
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
+from reportlab.lib import colors
 
 # Create your views here.
 
@@ -424,6 +426,7 @@ def sellersignupotp(request):
             return render(request, "sellersignup2.html",context)
 
 def sellersignupotp2(request):
+    context = {'Status' : ' ' }
     if request.user.is_authenticated:
         return redirect("/")
     if request.method == 'POST':
@@ -436,8 +439,9 @@ def sellersignupotp2(request):
                 username=phoneno, password=phoneno, email=email, first_name=name, last_name=name)
         user.save()
         accounted_created="true"
-        context={'account_created':accounted_created}
-        return render(request,"sellersignup2.html",context)
+        context={ 'Staus': 'OK' , 'account_created' : accounted_created}
+        # return render(request,"sellersignup2.html",context)
+        return JsonResponse(context)
 
 def sellersignin(request):
     if request.user.is_authenticated:
@@ -463,12 +467,14 @@ def sellersigninotp(request):
             otp = str(r.randint(1000, 9999))
             client.messages.create(
                 to=["+91"+phoneno], from_="+15185165876", body=otp)
-            context = {'otp': otp, 'cust_no': phoneno}
-            return render(request, "sellersigninotp.html", context)
+            context = {'Status' : 'OK' ,'otp': otp, 'cust_no': phoneno}
+            # return render(request, "sellersigninotp.html", context)
+            return JsonResponse(context)
         else:
             invalid = "invalid"
-            context = {'invalid': invalid}
-            return render(request, "sellerlogin.html", context)
+            context = {'Status' : 'OK' , 'invalid': invalid}
+            # return render(request, "sellerlogin.html", context)
+            return JsonResponse(context)
 
 def sellersigninotp2(request):
     if request.user.is_authenticated:
@@ -485,13 +491,15 @@ def sellersigninotp2(request):
                 Seller_details = SellerDetails.objects.filter(
                 phoneno=cust_no)
                 loggedin = 'true'
-                addedproducts=Products.objects.filter(seller_phone_no=cust_no)
-                context = {'loggedin': loggedin,'sellerdetails':Seller_details,"addedproducts":addedproducts}
-                return render(request, "seller1.html", context)
+                addedproducts= list(Products.objects.filter(seller_phone_no=cust_no).values())
+                context = {'Status':'OK', 'loggedin': loggedin,'sellerdetails':Seller_details,"addedproducts":addedproducts}
+                # return render(request, "seller1.html", context)
+                return JsonResponse(context)
     else:
         wrongotp="true"
-        context={"wrongotp":wrongotp}
-        return render(request, "sellersigninotp.html",context)
+        context={'Status':'OK' ,"wrongotp" : wrongotp}
+        # return render(request, "sellersigninotp.html",context)
+        return JsonResponse(context)
 
 def addproduct(request):
     if request.user.is_authenticated:
@@ -520,9 +528,11 @@ def addproduct2(request):
             product.save()
             productadded="true"
             context={
+                'Status' : 'OK',
                 'productadded':productadded
             }
-            return render(request, "seller-addproduct.html",context)
+            # return render(request, "seller-addproduct.html",context)
+            return JsonResponse(context)
         else:
             return redirect("/signin")
     else:
@@ -540,11 +550,12 @@ def deleteproduct(request):
                 'productdelete':productdelete
             }
             username = request.user
-            addedproducts=Products.objects.filter(seller_phone_no=username)
-            Seller_details = SellerDetails.objects.filter(
-                    phoneno=username)
-            context = {'sellerdetails':Seller_details,"addedproducts":addedproducts}
-            return render(request, "seller1.html",context)
+            addedproducts= list(Products.objects.filter(seller_phone_no=username).values())
+            Seller_details = list(SellerDetails.objects.filter(
+                    phoneno=username).values())
+            context = {'status':'OK', 'sellerdetails':Seller_details, "addedproducts":addedproducts}
+            # return render(request, "seller1.html",context)
+            return JsonResponse(context)
         else:
             return redirect("/")
     else:
@@ -614,10 +625,8 @@ def afterpaypage(request):
             customer_phone_no=custno,total_price=totalcost,date=orderdate,
             fifty_percent_payment=fiftypercent_payment,pickupaddress=pickuplocation,image=image)
         confirmorder.save()
-
         noofcart=request.POST.get("noofcart")
         deletecartproduct=Cart.objects.filter(no_of_cart=noofcart).delete()
-        
         # Content
         fileName = str(confirmorder.order_id)+"_orderid_fiftypercent.pdf"
         documentTitle = 'Payment receipt'
@@ -643,8 +652,6 @@ def afterpaypage(request):
         pdf.setTitle(documentTitle)
 
         pdf.drawCentredString(300, 770, title)
-
-
         pdf.setFillColorRGB(0, 0, 255)
         pdf.setFont("Courier-Bold", 24)
         pdf.drawCentredString(290,720, subTitle)
@@ -653,8 +660,6 @@ def afterpaypage(request):
         pdf.line(30, 710, 550, 710)
 
         # 4) Text object :: for large amounts of text
-        from reportlab.lib import colors
-
         text = pdf.beginText(40, 680)
         text.setFont("Courier", 18)
         text.setFillColor(colors.black)
@@ -721,6 +726,7 @@ def fullpayment(request):
 # here after the 100% payment the generated bill gets mailed to the customer as well as to the backend team as a proof
 @csrf_exempt
 def afterfullpayment(request):
+    respon = {"Status" : "OK"}
     if request.method=="POST" and request.user.is_authenticated:
         orderid=request.POST.get("orderid")
         print(orderid)
@@ -747,13 +753,9 @@ def afterfullpayment(request):
         ]
 
         # 0) Create document  
-
         pdf = canvas.Canvas(fileName)
         pdf.setTitle(documentTitle)
-
         pdf.drawCentredString(300, 770, title)
-
-
         pdf.setFillColorRGB(0, 0, 255)
         pdf.setFont("Courier-Bold", 24)
         pdf.drawCentredString(290,720, subTitle)
@@ -762,22 +764,17 @@ def afterfullpayment(request):
         pdf.line(30, 710, 550, 710)
 
         # 4) Text object :: for large amounts of text
-        from reportlab.lib import colors
-
+    
         text = pdf.beginText(40, 680)
         text.setFont("Courier", 18)
         text.setFillColor(colors.black)
         for line in textLines:
             text.textLine(line)
-
         pdf.drawText(text)
-
         pdf.save()
-
 
     # Sending the generated bill in pdf format to both the customer and admin
         contacts = ['boho0105@gmail.com', 'boho0105@gmail.com']
-
         msg = EmailMessage()
         msg['Subject'] = 'Payment receipt'
         msg['From'] = 'boho0105@gmail.com'
@@ -788,8 +785,7 @@ def afterfullpayment(request):
         with open(fileName,'rb') as f:
             file_data=f.read()
             f_name=f.name
-            
-
+        
         msg.add_attachment(file_data,maintype='application',subtype='octet-stream',filename=f_name)
 
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
@@ -804,11 +800,12 @@ def afterfullpayment(request):
         catblogs = Products.objects.values('category', 'product_id')
         cats = {post['category'] for post in catblogs}
         for cat in cats:
-            cat1 = Products.objects.filter(category=cat)
+            cat1 = list(Products.objects.filter(category=cat).values())
             allproducts.append(cat1)
         hundredpaid='true'
-        params = {'allproducts': allproducts,'hundredpaid':hundredpaid}
-        return render(request, "index1.html",params)
+        respon = {'status': 'ok', 'allproducts': allproducts,'hundredpaid':hundredpaid}
+        # return render(request, "index1.html",params)
+    return JsonResponse(respon)
 
 
 def header(request):
