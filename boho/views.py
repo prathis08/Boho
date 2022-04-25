@@ -57,8 +57,10 @@ def index(request):
 
 # This page will show the detailed view of the product 
 def productdetailedview(request,id):
-    product=Products.objects.filter(product_id=id)
-    return render(request, "productDescriptionPage.html",{'product':product[0]})
+    product=Products.objects.filter(product_id=id).values()
+    resp={'product':product[0]}
+    return JsonResponse(resp)
+    
 
 # This function will fetch all the phone numbers and send them to the register.html
 def signup(request):
@@ -67,7 +69,7 @@ def signup(request):
     for check2 in registered_nos:
         check.append(check2['cust_phone_no'])
     context = {'check': check}
-    return render(request, "createAccount.html", context)
+    return JsonResponse(context)
 
 # This will send the otp the number entered and collect the data of the customer
 def signupotp(request):
@@ -99,7 +101,8 @@ def signupotp(request):
             otpnumber = {'otp': otp, 'phoneno': phoneno,
                          'custname': cust_name, 'role': role, 'lookingfor': lookingfor,'email':email,'companyname':companyname}
             print("otp sent for signup")
-            return render(request, "otpVerification.html", otpnumber)
+            return JsonResponse(otpnumber)
+            # return render(request, "otpVerification.html", otpnumber)
         else:
             registered_nos = CustomerDetails.objects.values('cust_phone_no')
             check = []
@@ -107,8 +110,8 @@ def signupotp(request):
                 check.append(check2['cust_phone_no'])
             wrongno = 'true'
             context = {'check': check, 'wrongno': wrongno}
-
-            return render(request, "createAccount.html", context)
+            return JsonResponse(context)
+            # return render(request, "createAccount.html", context)
 
 # This will check whether the entered otp and the required otp are same or not
 def signupotp2(request):
@@ -134,7 +137,8 @@ def signupotp2(request):
             Customer_Details.save()
             accountcreated = 'true'
             context = {'accountcreated': accountcreated}
-            return render(request, "login copy.html", context)
+            return JsonResponse(context)
+            # return render(request, "login copy.html", context)
     return render(request, "otpVerification.html")
 
 
@@ -164,11 +168,15 @@ def signinotp(request):
             client.messages.create(
                 to=["+91"+phoneno], from_="+15185165876", body=otp)
             context = {'otp': otp, 'cust_no': phoneno}
-            return render(request, "loginotpverification.html", context)
+            return JsonResponse(context)
+
+            # return render(request, "loginotpverification.html", context)
         else:
             invalid = "invalid"
             context = {'invalid': invalid}
-            return render(request, "login copy.html", context)
+            return JsonResponse(context)
+
+            # return render(request, "login copy.html", context)
 
 # This will check whether the entered otp and the required otp are same or not
 def signinotp2(request):
@@ -193,7 +201,8 @@ def signinotp2(request):
                     cat1 = Products.objects.filter(category=cat)
                     allproducts.append(cat1)
                 params = {'allproducts': allproducts,'loggedin': loggedin}
-                return render(request, "index1.html",params)
+                return JsonResponse(params)
+                # return render(request, "index1.html",params)
     return render(request, "loginotpverification.html")
 
 # This is the logout function for the customer
@@ -269,7 +278,9 @@ def search(request):
                 if re.search(search,allprods3.name) or re.search(search,allprods3.category):
                     allprods.append(allprods3)
         context={'allprods':allprods}
-        return render(request, "search.html",context)
+        return JsonResponse(context)
+
+        # return render(request, "search.html",context)
 
 # This will fetch the user phoneno and after that it will fetch product data from cart which has the phonenumber of the requested user
 def cartproducts(request):
@@ -289,7 +300,9 @@ def cartproducts(request):
             context={'noproducts':noproducts}
         else:
             context = {'allords':allords}
-        return render(request, "cart.html",context)
+        return JsonResponse(context)
+
+        # return render(request, "cart.html",context)
     else:
         return redirect("/signin")
 
@@ -313,8 +326,9 @@ def catlogproducts(request):
             context={'noproducts':noproducts}
         else:
             context = {'allords':allords}
+        return JsonResponse(context)
 
-        return render(request, "catlog-page.html",context)
+        # return render(request, "catlog-page.html",context)
     else:
         return redirect("/signin")
 
@@ -373,7 +387,9 @@ def myorders(request):
             context={'noproducts':noproducts}
         else:
             context = {'allords':allords}
-        return render(request, "order-page.html", context)
+        return JsonResponse(context)
+
+        # return render(request, "order-page.html", context)
     else:
         return redirect("/signin")
 
