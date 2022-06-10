@@ -5,6 +5,7 @@ from boho import views
 
 urlpatterns = [
     path("", views.index, name='homepage'),
+    path("test", views.test, name='test'),
     path("sendotp", views.SendOTP, name='sendOTP'),
     path("validateotp", views.ValidateOTP, name='ValidateOTP'),
     path("productdetails", views.productdetails, name='productdetails'),

@@ -1,15 +1,6 @@
-from ast import JoinedStr
-from asyncore import compact_traceback
-from audioop import add
-from contextvars import Context
-from difflib import restore
-from distutils.log import error
-from unicodedata import category
-from urllib import response
-from cv2 import log
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
-from sqlalchemy import JSON, false, true
+from sqlalchemy import false, true
 from twilio.rest import Client
 import random as r
 # from .models import Cart, Catlog, ContactUsCustomers, ContactUsSellers, CustomerDetails, SalesDone, SellerDetails, Installers, Transporters, Orders, Products, check_availability, Offers
@@ -20,8 +11,6 @@ import re
 import os
 import smtplib
 from email.message import EmailMessage
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfgen import canvas
 from datetime import date
 from website.settings import RAZORPAY_API_KEY,RAZORPAY_API_SECRET_KEY,BASE_DIR
@@ -30,6 +19,10 @@ from django.views.decorators.csrf import csrf_exempt
 from reportlab.lib import colors
 from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+def test(request):
+    context = { "Status" : "200", "Response" : "OK from test"}
+    return JsonResponse(context)
 
 # This will fetch all the products from the table and show to the user
 def index(request):
@@ -171,154 +164,15 @@ def GetCostumerDetails(request):
     return JsonResponse(context)
 
 
-
-
-# This function will fetch all the phone numbers and send them to the register.html
-def signup(request):
-    registered_nos = CustomerDetails.objects.values('cust_phone_no')
-    check = []
-    for check2 in registered_nos:
-        check.append(check2['cust_phone_no'])
-    context = {'check': check}
-    return JsonResponse(context)
-
-# This will send the otp the number entered and collect the data of the customer
-def signupotp(request):
-    if request.user.is_authenticated:
-        return redirect("/")
-    otp = ''
-    if request.method == 'POST':
-        cust_name = request.POST.get('name')
-        phoneno = request.POST.get('phoneno')
-        email=request.POST.get('email')
-        role = request.POST.get('role')
-        lookingfor = request.POST.get('lookingfor')
-        companyname=request.POST.get('companyname')
-        registered_nos = User.objects.values('username')
-        check = []
-        for check2 in registered_nos:
-            check.append(check2['username'])
-        flag = true
-        for i in check:
-            if phoneno == i:
-                flag = false
-        if flag == true:
-            client = Client("ACd91fd2c97943ea0815f5acf1acca3c5e", "d757a5d65582d49ffe8e76fcd9ae6c67")
-            otp = str(r.randint(1000, 9999))
-            client.messages.create(
-                to=["+91"+phoneno], from_="+19803755068", body=otp)
-            otpnumber = {'otp': otp, 'phoneno': phoneno,
-                         'custname': cust_name, 'role': role, 'lookingfor': lookingfor,'email':email,'companyname':companyname}
-            print("otp sent for signup")
-            return JsonResponse(otpnumber)
-            # return render(request, "otpVerification.html", otpnumber)
-        else:
-            registered_nos = CustomerDetails.objects.values('cust_phone_no')
-            check = []
-            for check2 in registered_nos:
-                check.append(check2['cust_phone_no'])
-            wrongno = 'true'
-            context = {'check': check, 'wrongno': wrongno}
-            return JsonResponse(context)
-            # return render(request, "createAccount.html", context)
-        
-
-# This will check whether the entered otp and the required otp are same or not
-def signupotp2(request):
-    print("working")
-    if request.user.is_authenticated:
-        return redirect("/")
-    accountcreated = 'false'
-    if request.method == 'POST':
-        enteredotp = request.POST.get('enteredotp')
-        name = request.POST.get('name')
-        phoneno = request.POST.get('phoneno')
-        role = request.POST.get('role')
-        lookingfor = request.POST.get('lookingfor')
-        otp = request.POST.get('otp')
-        companyname=request.POST.get('companyname')
-        email=request.POST.get('email')
-        if enteredotp == otp:
-            user = User.objects.create_user(
-                username=phoneno, password=phoneno, email=email, first_name=name, last_name=name)
-            user.save()
-            Customer_Details = CustomerDetails(
-                cust_name=name, cust_phone_no=phoneno, cust_role=role, lookingfor=lookingfor,email=email,companyname=companyname)
-            Customer_Details.save()
-            accountcreated = 'true'
-            context = {'accountcreated': accountcreated}
-            return JsonResponse(context)
-    return render(request, "otpVerification.html")
-
-
-def signin(request):
-    if request.user.is_authenticated:
-        return redirect("/")
-    return render(request, "login copy.html") 
-
-# This will send the otp the number entered if the entered number has any account associated with it
-def signinotp(request):
-    if request.user.is_authenticated:
-        return redirect("/")
-    if request.method == 'POST':
-        phoneno = request.POST.get('phoneno')
-        registered_nos = CustomerDetails.objects.values('cust_phone_no')
-        check = []
-        for check2 in registered_nos:
-            check.append(check2['cust_phone_no'])
-        flag = false
-        for i in check:
-            if phoneno == i:
-                flag = true
-        if flag == true:
-            client = Client("ACd91fd2c97943ea0815f5acf1acca3c5e",
-                            "d757a5d65582d49ffe8e76fcd9ae6c67")
-            otp = str(r.randint(1000, 9999))
-            client.messages.create(
-                to=["+91"+phoneno], from_="+19803755068", body=otp)
-            context = {'otp': otp, 'cust_no': phoneno}
-            return JsonResponse(context)
-
-        else:
-            invalid = "invalid"
-            context = {'invalid': invalid}
-            return JsonResponse(context)
-
-# This will check whether the entered otp and the required otp are same or not
-def signinotp2(request):
-    loggedin = 'false'
-    if request.user.is_authenticated:
-        return redirect("/")
-    if request.method == 'POST':
-        enteredotp = request.POST.get('enteredotp')
-        requiredotp = request.POST.get('requiredotp')
-        cust_no = request.POST.get('phoneno')
-        if enteredotp == requiredotp:
-            user = auth.authenticate(username=cust_no, password=cust_no)
-            if user is not None:
-                Cust_details = CustomerDetails.objects.filter(
-                    cust_phone_no=cust_no)
-                auth.login(request, user)
-                loggedin = 'true'
-                allproducts = []
-                catblogs = Products.objects.values('category', 'product_id')
-                cats = {post['category'] for post in catblogs}
-                for cat in cats:
-                    cat1 = Products.objects.filter(category=cat)
-                    allproducts.append(cat1)
-                params = {'allproducts': allproducts,'loggedin': loggedin}
-                return JsonResponse(params)
-                # return render(request, "index1.html",params)
-    return render(request, "loginotpverification.html")
-
-# This is the logout function for the customer
-def customerlogout(request):
+def Logout(request):
+    context = { "Status" : "200"}
     if request.user.is_authenticated:
             logout(request)
-            return redirect("/")
+            context["Response" : "OK"]
+            return JsonResponse(context)
     else:
         logout(request)
-        return redirect("/")
+        return JsonResponse(context)
 
 
 def accountDetails(request):
