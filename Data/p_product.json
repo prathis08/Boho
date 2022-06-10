@@ -1,0 +1,88 @@
+{
+  "product_details": {
+    "id": 1,
+    "name": "product_name",
+    "brand": "brand_name",
+    "price": 1520,
+    "size": {
+      "width": {
+        "cm": 68.6,
+        "in": 27
+      },
+      "length": {
+        "cm": 10.05,
+        "in": 68.6
+      }
+    },
+    "colors": [
+      {
+        "id": 1,
+        "name": "color_name"
+      },
+      {
+        "id": 2,
+        "name": "color_name"
+      },
+      {
+        "id": 3,
+        "name": "color_name"
+      },
+      {
+        "id": 4,
+        "name": "color_name"
+      }
+    ],
+    "images": [
+      "https://some.image_link.jpg",
+      "https://some.image_link.jpg",
+      "https://some.image_link.jpg"
+    ],
+    "additional_details": {
+      "collection": "collection_name",
+      "product_code": "ABL89T456",
+      "product_type": "product_type",
+      "horizontal_pattern_repeat": 0.0,
+      "vertical_pattern_repeat": 68.6,
+      "pattern_match": "pattern_match_name",
+      "print_method": "print_method",
+      "country_of_origin": "country_name",
+      "description": "product_description",
+      "light_fast": "light_fast_rating",
+      "washing": "wash_options",
+      "strippability": "product_strippability",
+      "fire_rating": "fire_rating",
+      "paste_on_wall": "paste_on_wall_method",
+      "collection_section": "collection_section"
+    }
+  },
+  "similar_products": [
+    {
+      "id": 1,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 2,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 3,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 4,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    }
+  ]
+}

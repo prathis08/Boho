@@ -1,0 +1,9 @@
+{
+  "id": 1,
+  "name": "customer_name",
+  "phone_number": "1234567890",
+  "email": "customer@mail.com",
+  "company_name": "company_name",
+  "role": "customer_role",
+  "looking_for": "looking_for"
+}

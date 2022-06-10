@@ -1,0 +1,74 @@
+{
+  "brands": [
+    {
+      "id": 1,
+      "name": "brand_name",
+      "link": "/brands/brand_name"
+    },
+    {
+      "id": 2,
+      "name": "brand_name",
+      "link": "/brands/brand_name"
+    },
+    {
+      "id": 3,
+      "name": "brand_name",
+      "link": "/brands/brand_name"
+    },
+    {
+      "id": 4,
+      "name": "brand_name",
+      "link": "/brands/brand_name"
+    },
+    {
+      "id": 5,
+      "name": "brand_name",
+      "link": "/brands/brand_name"
+    },
+    {
+      "id": 6,
+      "name": "brand_name",
+      "link": "/brands/brand_name"
+    },
+    {
+      "id": 7,
+      "name": "brand_name",
+      "link": "/brands/brand_name"
+    },
+    {
+      "id": 8,
+      "name": "brand_name",
+      "link": "/brands/brand_name"
+    }
+  ],
+  "selected_brand": [
+    {
+      "id": 1,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 2,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 3,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 4,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    }
+  ]
+}

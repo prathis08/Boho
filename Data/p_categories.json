@@ -1,0 +1,78 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "category_name",
+      "category_options": [
+        {
+          "id": 1,
+          "name": "category_option_name",
+          "link": "/categories/category_option_name"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "category_name",
+      "category_options": [
+        {
+          "id": 1,
+          "name": "category_option_name",
+          "link": "/categories/category_option_name"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "category_name",
+      "category_options": [
+        {
+          "id": 1,
+          "name": "category_option_name",
+          "link": "/categories/category_option_name"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "category_name",
+      "category_options": [
+        {
+          "id": 1,
+          "name": "category_option_name",
+          "link": "/categories/category_option_name"
+        }
+      ]
+    }
+  ],
+  "selected_category": [
+    {
+      "id": 1,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 2,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 3,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 4,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    }
+  ]
+}

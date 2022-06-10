@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Cart,Catlog,ContactUsCustomers,ContactUsSellers,CustomerDetails,SalesDone,SellerDetails,Installers,sponsors,Transporters,Orders,Products,check_availability
+from .models import Cart,Catlog,ContactUsCustomers,ContactUsSellers,CustomerDetails,SalesDone,SellerDetails,Installers, brands, offers,sponsors,Transporters,Orders,Products,check_availability
 # Register your models here.
 
 admin.site.register(Cart)
@@ -14,4 +14,5 @@ admin.site.register(Transporters)
 admin.site.register(Orders)
 admin.site.register(Products)
 admin.site.register(check_availability)
-admin.site.register(sponsors)
+admin.site.register(brands)
+admin.site.register(offers)

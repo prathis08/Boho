@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "product_name",
+    "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+    "link": "/products/product_link",
+    "image_link": "https://some.image_link.jpg"
+  },
+  {
+    "id": 2,
+    "name": "product_name",
+    "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+    "link": "/products/product_link",
+    "image_link": "https://some.image_link.jpg"
+  },
+  {
+    "id": 3,
+    "name": "product_name",
+    "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+    "link": "/products/product_link",
+    "image_link": "https://some.image_link.jpg"
+  },
+  {
+    "id": 4,
+    "name": "product_name",
+    "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+    "link": "/products/product_link",
+    "image_link": "https://some.image_link.jpg"
+  }
+]

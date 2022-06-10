@@ -1,0 +1,110 @@
+{
+  "acquired_samples": 0,
+  "cart_items": [
+    {
+      "id": 1,
+      "name": "Consectetur adipiscing elit",
+      "productCode": "ABL89T456",
+      "quantity": 10,
+      "price": 158234,
+      "image": "https://some.image_link.jpg",
+      "progress": {
+        "sample": 0,
+        "productStatus": false,
+        "firstInstallment": false,
+        "secondInstallment": false,
+        "delivery": false
+      }
+    },
+    {
+      "id": 2,
+      "name": "Consectetur adipiscing elit",
+      "productCode": "ABL89T456",
+      "quantity": 10,
+      "price": 158234,
+      "image": "https://some.image_link.jpg",
+      "progress": {
+        "sample": 1,
+        "productStatus": false,
+        "firstInstallment": false,
+        "secondInstallment": false,
+        "delivery": false
+      }
+    },
+    {
+      "id": 3,
+      "name": "Consectetur adipiscing elit",
+      "productCode": "ABL89T456",
+      "quantity": 10,
+      "price": 158234,
+      "image": "https://some.image_link.jpg",
+      "progress": {
+        "sample": -1,
+        "productStatus": false,
+        "firstInstallment": false,
+        "secondInstallment": false,
+        "delivery": false
+      }
+    },
+    {
+      "id": 4,
+      "name": "Consectetur adipiscing elit",
+      "productCode": "ABL89T456",
+      "quantity": 10,
+      "price": 158234,
+      "image": "https://some.image_link.jpg",
+      "progress": {
+        "sample": 1,
+        "productStatus": true,
+        "firstInstallment": false,
+        "secondInstallment": false,
+        "delivery": false
+      }
+    },
+    {
+      "id": 5,
+      "name": "Consectetur adipiscing elit",
+      "productCode": "ABL89T456",
+      "quantity": 10,
+      "price": 158234,
+      "image": "https://some.image_link.jpg",
+      "progress": {
+        "sample": -1,
+        "productStatus": true,
+        "firstInstallment": false,
+        "secondInstallment": false,
+        "delivery": false
+      }
+    },
+    {
+      "id": 6,
+      "name": "Consectetur adipiscing elit",
+      "productCode": "ABL89T456",
+      "quantity": 10,
+      "price": 158234,
+      "image": "https://some.image_link.jpg",
+      "progress": {
+        "sample": 1,
+        "productStatus": true,
+        "firstInstallment": true,
+        "secondInstallment": false,
+        "delivery": false
+      }
+    },
+    {
+      "id": 7,
+      "name": "Consectetur adipiscing elit",
+      "productCode": "ABL89T456",
+      "quantity": 10,
+      "price": 158234,
+      "image": "https://some.image_link.jpg",
+      "progress": {
+        "sample": 1,
+        "productStatus": true,
+        "firstInstallment": true,
+        "secondInstallment": true,
+        "delivery": true
+      }
+    }
+  ]
+}

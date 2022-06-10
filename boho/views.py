@@ -1,11 +1,19 @@
+from ast import JoinedStr
 from asyncore import compact_traceback
 from audioop import add
+from contextvars import Context
+from difflib import restore
+from distutils.log import error
+from unicodedata import category
+from urllib import response
+from cv2 import log
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render
 from sqlalchemy import JSON, false, true
 from twilio.rest import Client
 import random as r
-from .models import Cart, Catlog, ContactUsCustomers, ContactUsSellers, CustomerDetails, SalesDone, SellerDetails, Installers, Transporters, Orders, Products, check_availability
+# from .models import Cart, Catlog, ContactUsCustomers, ContactUsSellers, CustomerDetails, SalesDone, SellerDetails, Installers, Transporters, Orders, Products, check_availability, Offers
+from .models import *
 from django.contrib.auth.models import User, auth
 from django.contrib.auth import logout
 import re
@@ -20,20 +28,36 @@ from website.settings import RAZORPAY_API_KEY,RAZORPAY_API_SECRET_KEY,BASE_DIR
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
 from reportlab.lib import colors
-
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 # This will fetch all the products from the table and show to the user
 def index(request):
     allproducts = []
-    resp = {"Products": allproducts}
+    Offers = []
+    top_brands = []
+    top_categories = []
+    resp = {"offers" : Offers, "top_brands" : top_brands, "top_categories": top_categories, "top_products": allproducts }
     catblogs = Products.objects.values('category', 'product_id')
     cats = {post['category'] for post in catblogs}
+
     for cat in cats:
-        cat1 = list(Products.objects.filter(category=cat).values())
-        allproducts.append(cat1)
-        # resp["Products"].append(cat1)
-        # params = {'allproducts': allproducts}
+        cat1 = Products.objects.filter(category=cat).values()
+        allproducts.append(cat1[0])
+
+
+    offer_details = offers.objects.all().values()
+    for temp in offer_details:
+        Offers.append(temp)
+
+    brand = brands.objects.all().values()
+    for temp in brand:
+        top_brands.append(temp)
+
+    category = Products.objects.values_list("category", flat=True)
+    for temp in category:
+        top_categories.append(temp)
+
     if request.user.is_authenticated:
         username = request.user
         print(username)
@@ -58,11 +82,96 @@ def index(request):
         return JsonResponse(resp)
 
 # This page will show the detailed view of the product 
-def productdetailedview(request,id):
-    product=Products.objects.filter(product_id=id).values()
-    resp={'product':product[0]}
+@csrf_exempt
+def productdetails(request):
+    print (request.POST.get('id'))
+    try :
+        product=Products.objects.filter(product_id = request.POST.get("id")).values()
+        resp={'product':product[0]}
+    except:
+        resp = {'status' : "404", 'Error' : 'Product not found'}
     return JsonResponse(resp)
+
+
+def SendOTP(request):
+    context = {"Status" : "200"}
+    if request.user.is_authenticated:
+        context["IsUserAuthenticated"] = True
+    if request.method == 'POST' :
+        MobileNumber = request.POST.get('MobileNumber')
+        client = Client("ACd91fd2c97943ea0815f5acf1acca3c5e", "d757a5d65582d49ffe8e76fcd9ae6c67")
+        try:
+            otp = str(r.randint(1000, 9999))
+            request.session['OTP'] = otp
+            request.session['MobileNumber'] = MobileNumber
+            client.messages.create(to=["+91"+MobileNumber], from_="+19803755068", body=otp)
+            context["Response"] = "OTP SENT"
+            context["ExistingUser"] = False
+            registered_nos = CustomerDetails.objects.all().values_list('cust_phone_no')
+            list_of_nos = ()
+            for i in registered_nos :
+                list_of_nos += i
+            if MobileNumber in list_of_nos :
+                context['ExistingUser'] = True
+
+        except Exception as e:
+            context["Status"] = "500"
+            context["Response"] = "Inernal Server Error"
+            # raise(e)
+    else :
+        context["Status"] = "400"
+        context["Response"] = "Bad Request"
     
+    return JsonResponse(context)
+
+
+def ValidateOTP(request):
+    context = {"Status" : "200"}
+    if request.user.is_authenticated:
+        context["IsUserAuthenticated"] = True
+
+    if request.method == 'POST' :
+        otp = request.session.get("OTP")
+        EnteredOTP = request.POST.get("otp")
+        if otp == EnteredOTP :
+            context['IsUserAuthenticated'] = True
+        else:
+            context['IsUserAuthenticated'] = False
+    else :
+        context["Status"] = "400"
+        context["Response"] = "Bad Request"
+
+    return JsonResponse(context)
+    
+
+def GetCostumerDetails(request):
+    context = { "Status" : "200"}
+    if request.method == 'POST':
+        try:
+            cust_name = request.POST.get('name')
+            phoneno = request.session.get('MobileNumber')
+            email=request.POST.get('email')
+            role = request.POST.get('role')
+            lookingfor = request.POST.get('lookingfor')
+            companyname=request.POST.get('companyname')
+            user = User.objects.create_user(
+                    username=phoneno, password=phoneno, email=email, first_name=cust_name, last_name=cust_name)
+            user.save()
+            Customer_Details = CustomerDetails(
+                    cust_name=cust_name, cust_phone_no=phoneno, cust_role=role, lookingfor=lookingfor,email=email,companyname=companyname)
+            Customer_Details.save()
+            context["Response" : "User Created"]
+        except:
+            context["Status"] = "500"
+            context["Response"] = "Internal Server Error"
+    else :
+        context["Status"] = "400"
+        context["Response"] = "Bad Request"
+
+    return JsonResponse(context)
+
+
+
 
 # This function will fetch all the phone numbers and send them to the register.html
 def signup(request):
@@ -93,13 +202,11 @@ def signupotp(request):
         for i in check:
             if phoneno == i:
                 flag = false
-
         if flag == true:
-            client = Client("AC8a145f355071d06362834e5fad001b7b",
-                            "798612b1735ee3e167e66d7a61416d9c")
+            client = Client("ACd91fd2c97943ea0815f5acf1acca3c5e", "d757a5d65582d49ffe8e76fcd9ae6c67")
             otp = str(r.randint(1000, 9999))
             client.messages.create(
-                to=["+91"+phoneno], from_="+15185165876", body=otp)
+                to=["+91"+phoneno], from_="+19803755068", body=otp)
             otpnumber = {'otp': otp, 'phoneno': phoneno,
                          'custname': cust_name, 'role': role, 'lookingfor': lookingfor,'email':email,'companyname':companyname}
             print("otp sent for signup")
@@ -114,6 +221,7 @@ def signupotp(request):
             context = {'check': check, 'wrongno': wrongno}
             return JsonResponse(context)
             # return render(request, "createAccount.html", context)
+        
 
 # This will check whether the entered otp and the required otp are same or not
 def signupotp2(request):
@@ -140,14 +248,13 @@ def signupotp2(request):
             accountcreated = 'true'
             context = {'accountcreated': accountcreated}
             return JsonResponse(context)
-            # return render(request, "login copy.html", context)
     return render(request, "otpVerification.html")
 
 
 def signin(request):
     if request.user.is_authenticated:
         return redirect("/")
-    return render(request, "login copy.html")
+    return render(request, "login copy.html") 
 
 # This will send the otp the number entered if the entered number has any account associated with it
 def signinotp(request):
@@ -164,21 +271,18 @@ def signinotp(request):
             if phoneno == i:
                 flag = true
         if flag == true:
-            client = Client("AC8a145f355071d06362834e5fad001b7b",
-                            "798612b1735ee3e167e66d7a61416d9c")
+            client = Client("ACd91fd2c97943ea0815f5acf1acca3c5e",
+                            "d757a5d65582d49ffe8e76fcd9ae6c67")
             otp = str(r.randint(1000, 9999))
             client.messages.create(
-                to=["+91"+phoneno], from_="+15185165876", body=otp)
+                to=["+91"+phoneno], from_="+19803755068", body=otp)
             context = {'otp': otp, 'cust_no': phoneno}
             return JsonResponse(context)
 
-            # return render(request, "loginotpverification.html", context)
         else:
             invalid = "invalid"
             context = {'invalid': invalid}
             return JsonResponse(context)
-
-            # return render(request, "login copy.html", context)
 
 # This will check whether the entered otp and the required otp are same or not
 def signinotp2(request):
@@ -216,14 +320,19 @@ def customerlogout(request):
         logout(request)
         return redirect("/")
 
-            
-def aboutus(request):
-    return render(request, "aboutus.html")
 
-
-def contactuscustomer(request):
-    return render(request, "contactus.html")
-
+def accountDetails(request):
+    details = []
+    resp = {"status" : "OK", "details" : details}
+    if request.user.is_authenticated:
+        user = CustomerDetails.objects.filter(cust_name = request.user).values()
+        for temp in user:
+            details.append(temp)
+        return (JsonResponse(resp))
+    
+    else :
+        resp["error"] = "Unauthenticated User"
+        return (JsonResponse(resp))
 
 def contactuscustomer2(request):
     if request.method=="POST":
@@ -241,9 +350,6 @@ def contactuscustomer2(request):
             return render(request, "contactus.html")
         else:
             return render(request,"login copy.html")
-
-def contactusseller(request):
-    return render(request, "contactus.html")
 
 def contactusseller2(request):
     if request.method=="POST":
@@ -265,7 +371,7 @@ def contactusseller2(request):
 # This will take a input from the search form and show the products that match the entered words
 def search(request):
     if request.method == 'POST':
-        search=request.POST.get("search")
+        search=request.POST.get("searchQuery")
         allproducts = []
         catblogs = Products.objects.values('category', 'product_id')
         cats = {post['category'] for post in catblogs}
@@ -288,25 +394,26 @@ def search(request):
 def cartproducts(request):
     if request.user.is_authenticated:
         username = request.user
-        allords = []
+        cart_items = []
         custid=CustomerDetails.objects.get(cust_phone_no=username)
         custid2=custid.cust_id
         catblogs = Cart.objects.values('cust_id')
         cat1=""
         cats = {ords['cust_id'] for ords in catblogs}
         for cat in cats:
-            cat1 = Cart.objects.filter(cust_id=custid2)
-        allords.append(cat1)
-        noproducts="no"
-        if allords==['']:
-            context={'noproducts':noproducts}
+            cat1 = list(Cart.objects.filter(cust_id=custid2).values())
+            cart_items.append(cat1)
+        if cart_items==['']:
+            resp={'status' : '200' , 'response' : "No Products Found"}
         else:
-            context = {'allords':allords}
-        return JsonResponse(context)
-
+            resp = {'status' : '200' , 'cart_items': cart_items}
+        return JsonResponse(resp)
         # return render(request, "cart.html",context)
     else:
-        return redirect("/signin")
+        respn = {}
+        respn['status'] = '401'
+        respn['response'] = 'Unauthenticated User'
+        return (JsonResponse(respn))
 
 
 
@@ -314,7 +421,7 @@ def cartproducts(request):
 def catlogproducts(request):
     if request.user.is_authenticated:
         username = request.user
-        allords = []
+        cart_items = []
         custid=CustomerDetails.objects.get(cust_phone_no=username)
         custid2=custid.cust_id
         catblogs = Catlog.objects.values('cust_id')
@@ -322,12 +429,12 @@ def catlogproducts(request):
         cats = {ords['cust_id'] for ords in catblogs}
         for cat in cats:
             cat1 = Catlog.objects.filter(cust_id=custid2)
-        allords.append(cat1)
+        cart_items.append(cat1)
         noproducts="no"
-        if allords==['']:
+        if cart_items==['']:
             context={'noproducts':noproducts}
         else:
-            context = {'allords':allords}
+            context = {'cart_items':cart_items}
         return JsonResponse(context)
 
         # return render(request, "catlog-page.html",context)
@@ -344,11 +451,9 @@ def checking(request):
     else:
          return redirect("/signin")
 
-
-
-
 # It will add the product data to the catlog as well as to the cart simultaneously
-def addtocatlogs(request):
+def addToCart(request):
+    respn = {}
     if request.method == 'POST':
         if request.user.is_authenticated:
             username = request.user
@@ -367,34 +472,39 @@ def addtocatlogs(request):
             description=description,cost=cost,totalcost=totalcost,pickuplocation=pickuplocation,image=image,checkingavailability="true",qty=qty)
             added_to_cart.save()
             noofcart=added_to_cart.no_of_cart
-            return redirect("/signin")
+            respn['status'] = '200'
+            respn['response'] = 'added to cart'
+            return (JsonResponse(respn))
         else:
-            return redirect("/signin")
+            respn['status'] = '401'
+            respn['response'] = 'Unauthenticated User'
+            return (JsonResponse(respn))
     else:
-        return redirect("/signin")
+        respn['status'] = '500'
+        respn['response'] = 'Internal Server Error'
+        return (JsonResponse(respn))
 
 # This will fetch the user phoneno and after that it will fetch product data from orders which has the phonenumber of the requested user
 def myorders(request):
     if request.user.is_authenticated:
         username = request.user
-        allords = []
+        cart_items = []
         catblogs = Orders.objects.values('customer_phone_no')
         cat1=""
         cats = {ords['customer_phone_no'] for ords in catblogs}
         for cat in cats:
             cat1 = Orders.objects.filter(customer_phone_no=username)
-        allords.append(cat1)
+        cart_items.append(cat1)
         noproducts="no"
-        if allords==[''] :
+        if cart_items==[''] :
             context={'noproducts':noproducts}
         else:
-            context = {'allords':allords}
+            context = {'cart_items':cart_items}
         return JsonResponse(context)
 
         # return render(request, "order-page.html", context)
     else:
         return redirect("/signin")
-
 
 # This will delete the product data from the cart
 def removefromcart(request):
@@ -404,8 +514,6 @@ def removefromcart(request):
         return redirect("/cartproducts")
     else:
         return redirect("/signin")
-
-
 
 def sellersignup(request):
     checkno=User.objects.values('username')
@@ -661,9 +769,7 @@ def afterpaypage(request):
             str(orderitemqty)+
            str(ordertotalprice)
         ]
-
         # 0) Create document  
-
         pdf = canvas.Canvas(fileName)
         pdf.setTitle(documentTitle)
 
@@ -823,6 +929,10 @@ def afterfullpayment(request):
         # return render(request, "index1.html",params)
     return JsonResponse(respon)
 
-
-def header(request):
-    return render(request,"header.html")
+        
+# def newArrivals(request):
+#     new = []
+#     resp = {"status" : "200" , "new" : new }
+@login_required
+def timepass(request):
+    return (JsonResponse({"test" : "hello"}))

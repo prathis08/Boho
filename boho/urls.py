@@ -5,21 +5,22 @@ from boho import views
 
 urlpatterns = [
     path("", views.index, name='homepage'),
-    path("productdetail/<int:id>", views.productdetailedview, name='productdetailedview'),
+    path("sendotp", views.SendOTP, name='sendOTP'),
+    path("validateotp", views.ValidateOTP, name='ValidateOTP'),
+    path("productdetails", views.productdetails, name='productdetails'),
     path("signup", views.signup, name='signup'),
+    path("accountDetails", views.accountDetails, name='accountDetails'),
     path("signup/otpverify", views.signupotp, name='signupotp'),
     path("signup/otpverify2", views.signupotp2, name='signupotp2'),
     path("signin", views.signin, name='signin'),
     path("signin/otpverify", views.signinotp, name='signinotp'),
     path("signin/otpverify2", views.signinotp2, name='signinotp2'),
     path("cuslogout",views.customerlogout,name="customerlogout"),
-    path("aboutus", views.aboutus, name='aboutus'),
-    path("contact", views.contactuscustomer, name='contactuscustomer'),
     path("search", views.search, name='search'),
-    path("catlogproducts", views.catlogproducts, name='catlogproducts'),
+    path("addtocart", views.addToCart, name='addtocart'),
     path("cartproducts", views.cartproducts, name='cartproducts'),
     path("removefromcart",views.removefromcart,name="removefromcart"),
-    path("productaddedtocatlog",views.addtocatlogs,name='productaddedtocatlogs'),
+    # path("productaddedtocatlog",views.addtocatlogs,name='productaddedtocatlogs'),
     path("checking",views.checking,name='checking'),
     path("myorders",views.myorders,name='myorders'),
     path('sellersignup',views.sellersignup,name="sellerssignup"),
@@ -36,6 +37,6 @@ urlpatterns = [
     path('afterpayment',views.afterpaypage,name='afterpaypage'),
     path('fullpayment',views.fullpayment,name='fullpayment'),
     path('afterfullpayment',views.afterfullpayment,name='afterfullpayment'),
-    path('header',views.header,name="header")
+    path('timepass',views.timepass,name='timepass')
     
 ]

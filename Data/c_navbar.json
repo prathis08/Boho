@@ -1,0 +1,46 @@
+{
+  "categories": [
+    {
+      "id": 1,
+      "name": "Category 1",
+      "link": "/categories/Category_LINK_1"
+    },
+    {
+      "id": 2,
+      "name": "Category 2",
+      "link": "/categories/Category_LINK_2"
+    },
+    {
+      "id": 3,
+      "name": "Category 3",
+      "link": "/categories/Category_LINK_3"
+    },
+    {
+      "id": 4,
+      "name": "Category 4",
+      "link": "/categories/Category_LINK_4"
+    }
+  ],
+  "brands": [
+    {
+      "id": 1,
+      "name": "Brand 1",
+      "link": "/brands/BRAND_LINK_1"
+    },
+    {
+      "id": 2,
+      "name": "Brand 2",
+      "link": "/brands/BRAND_LINK_2"
+    },
+    {
+      "id": 3,
+      "name": "Brand 3",
+      "link": "/brands/BRAND_LINK_3"
+    },
+    {
+      "id": 4,
+      "name": "Brand 4",
+      "link": "/brands/BRAND_LINK_4"
+    }
+  ]
+}

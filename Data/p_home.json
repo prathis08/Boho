@@ -1,0 +1,142 @@
+{
+  "offers": [
+    {
+      "id": 1,
+      "name": "Offer 1",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/offers/offer1",
+      "image_link": "https://some.image_link.jpg",
+      "accent_color": "#ffffff"
+    },
+    {
+      "id": 2,
+      "name": "Offer 2",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/offers/offer2",
+      "image_link": "https://some.image_link.jpg",
+      "accent_color": "#ffffff"
+    },
+    {
+      "id": 3,
+      "name": "Offer 3",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/offers/offer3",
+      "image_link": "https://some.image_link.jpg",
+      "accent_color": "#ffffff"
+    }
+  ],
+  "top_brands": [
+    {
+      "id": 1,
+      "name": "brand_name",
+      "link": "/brands/brand_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 2,
+      "name": "brand_name",
+      "link": "/brands/brand_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 3,
+      "name": "brand_name",
+      "link": "/brands/brand_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 4,
+      "name": "brand_name",
+      "link": "/brands/brand_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 5,
+      "name": "brand_name",
+      "link": "/brands/brand_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 6,
+      "name": "brand_name",
+      "link": "/brands/brand_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 7,
+      "name": "brand_name",
+      "link": "/brands/brand_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 8,
+      "name": "brand_name",
+      "link": "/brands/brand_link",
+      "image_link": "https://some.image_link.jpg"
+    }
+  ],
+  "top_categories": [
+    {
+      "id": 1,
+      "name": "category_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/categories/category_link",
+      "image_link": "https://some.image_link.jpg",
+      "accent_color": "#ffffff"
+    },
+    {
+      "id": 2,
+      "name": "category_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/categories/category_link",
+      "image_link": "https://some.image_link.jpg",
+      "accent_color": "#ffffff"
+    },
+    {
+      "id": 3,
+      "name": "category_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/categories/category_link",
+      "image_link": "https://some.image_link.jpg",
+      "accent_color": "#ffffff"
+    },
+    {
+      "id": 4,
+      "name": "category_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/categories/category_link",
+      "image_link": "https://some.image_link.jpg",
+      "accent_color": "#ffffff"
+    }
+  ],
+  "top_products": [
+    {
+      "id": 1,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 2,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 3,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    },
+    {
+      "id": 4,
+      "name": "product_name",
+      "description": "Nulla vitae elit libero, a pharetra augue mollis interdum.",
+      "link": "/products/product_link",
+      "image_link": "https://some.image_link.jpg"
+    }
+  ]
+}
